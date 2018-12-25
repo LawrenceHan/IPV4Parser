@@ -11,8 +11,14 @@
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-//        NSLog(@"Hello, World!");
+        // The problem is:
+        // Convert an IPv4 address in the format of null-terminated C string into a 32-bit integer.
+        
+        // The tricky part is, 2896692481 is over int32
+        // in fact int32 include -2147483648 to 2147483647
+        // but uint32 include 0 to 4294967295
+        // Quote from wikipedia "IPv4 uses 32-bit addresses which limits the address space to 4294967296 (232) addresses."
+        // A-ha!
         
         NSString *ip = @"     172.   168    . 5. 1 ";
         
