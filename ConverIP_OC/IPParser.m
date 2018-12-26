@@ -10,6 +10,7 @@
 
 const uint32 validResult = 2896692481;
 
+// cover non digit, '.' and ' ' check
 uint32_t ipv4ParseCStyle(const char *ip) {
     uint8_t bytes[4] = {};
     int i = 0;
@@ -19,7 +20,9 @@ uint32_t ipv4ParseCStyle(const char *ip) {
         char c = ip[i];
         
         if (c >= '0' && c <= '9') { // handle digits
-            bytes[j]= bytes[j]*10 + atoi(&c);
+            // changed from atoi(&c) to c - '0', incresed from 0.331 to 0.169
+            // because atoi has more cost than a simple minus operation
+            bytes[j]= bytes[j]*10 + (c - '0');
         } else if (c == '.') { // handle dot
             j--;
         } else if (c == ' ') { // handle spaces (plural)
@@ -41,6 +44,47 @@ uint32_t ipv4ParseCStyle(const char *ip) {
     }
     
     // bitwise is my favourite
+    return bytes[3] << 24
+    | bytes[2] << 16
+    | bytes[1] << 8
+    | bytes[0];
+}
+
+uint32_t ipv4ParseCStyleEnhanced(const char *ip) {
+    uint8_t bytes[4] = {};
+    int i = 0;
+    int8_t j = 3;
+    
+    bool afterDot = true;
+    bool needDot = false;
+    
+    while (ip[i] != '\0') {
+        char c = ip[i];
+        
+        if (c >= '0' && c <= '9') {
+            if (needDot) {
+                return 0;
+            }
+            
+            bytes[j]= bytes[j]*10 + (c - '0');
+            
+            // update flag
+            afterDot = false;
+            needDot = false;
+        } else if (c == '.') {
+            j--;
+            
+            // update flag
+            afterDot = true;
+            needDot = false;
+        } else if (c == ' ' && !afterDot) {
+            // update flag
+            needDot = true;
+        }
+        
+        i++;
+    }
+    
     return bytes[3] << 24
     | bytes[2] << 16
     | bytes[1] << 8

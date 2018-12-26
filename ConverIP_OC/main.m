@@ -40,6 +40,14 @@ int main(int argc, const char * argv[]) {
         
         printf("ipv4ParseFoundation runs 10,000 times, costs: %f\n", end);
         
+        // test enhanced c style
+        start = CFAbsoluteTimeGetCurrent();
+        for (int i=0; i<10000; i++) {
+            ipv4ParseCStyleEnhanced(ip.UTF8String);
+        }
+        end = CFAbsoluteTimeGetCurrent()-start;
+        
+        printf("ipv4ParseCStyleEnhanced runs 10,000 times, costs: %f\n", end);
         
         // if we runs over 1,000,000 times, Foundation win
         start = CFAbsoluteTimeGetCurrent();
@@ -57,6 +65,15 @@ int main(int argc, const char * argv[]) {
         end = CFAbsoluteTimeGetCurrent()-start;
         
         printf("ipv4ParseFoundation runs 1,000,000 times, costs: %f\n", end);
+        
+        // test enhanced c style
+        start = CFAbsoluteTimeGetCurrent();
+        for (int i=0; i<1000000; i++) {
+            ipv4ParseCStyleEnhanced(ip.UTF8String);
+        }
+        end = CFAbsoluteTimeGetCurrent()-start;
+        
+        printf("ipv4ParseCStyleEnhanced runs 1,000,000 times, costs: %f\n", end);
     }
     return 0;
 }

@@ -20,6 +20,7 @@ extern const uint32 validResult;
 extern "C" {
 #endif
     uint32_t ipv4ParseCStyle(const char *ip);
+    uint32_t ipv4ParseCStyleEnhanced(const char *ip);
     uint32_t ipv4ParseFoundation(const char *ip);
 #ifdef __cplusplus
 }
