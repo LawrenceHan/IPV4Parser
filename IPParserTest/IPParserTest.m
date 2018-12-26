@@ -63,7 +63,7 @@
 }
 
 - (void)testSpaceBetweenDigits {
-    _ip = @"17 2.168.5.1";
+    _ip = @"  17 2.16 8.5.1";
     uint32 result = ipv4ParseCStyle(_ip.UTF8String);
     XCTAssert(result == 0);
 }
@@ -77,6 +77,13 @@
 - (void)testCombinedSpacesBetweenDigits {
     _ip = @"  17 2.1  68.5    .1  ";
     uint32 result = ipv4ParseCStyle(_ip.UTF8String);
+    XCTAssert(result == 0);
+}
+
+- (void)testMoreThanOneSpaceBetweenDigitFails {
+    _ip = @"17  2.168.5.1";
+    uint32 result = ipv4ParseCStyle(_ip.UTF8String);
+    // the ipv4ParseCStyle doesn't cover more than 1 spaces between digit
     XCTAssert(result == 0);
 }
 

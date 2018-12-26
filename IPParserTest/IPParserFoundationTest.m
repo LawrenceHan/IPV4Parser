@@ -75,7 +75,7 @@
 }
 
 - (void)testCombinedSpacesBetweenDigits {
-    _ip = @"  17 2.1  68.5    .1  ";
+    _ip = @"  17  2.1  68.5    .1  ";
     uint32 result = ipv4ParseFoundation(_ip.UTF8String);
     XCTAssert(result == 0);
 }
