@@ -11,7 +11,7 @@
 const uint32 validResult = 2896692481;
 
 // cover non digit, '.' and ' ' check
-// but doesn't more than 1 spaces between digit
+// but doesn't conver more than 1 spaces between digit
 // e.g: "17  2.168.5.1"
 uint32_t ipv4ParseCStyle(const char *ip) {
     uint8_t bytes[4] = {};
